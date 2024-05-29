@@ -1,0 +1,94 @@
+name: Data Pipeline
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11.3'
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "::add-path::$HOME/.local/bin"
+
+      - name: Cache Poetry dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Install dependencies
+        run: |
+          poetry install --with dev --no-interaction --no-root
+
+      - name: Install DVC
+        run: |
+          poetry add dvc
+          dvc --version
+
+  fetch_weather_data:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install --with dev --no-interaction --no-root
+
+      - name: Install DVC
+        uses: iterative/setup-dvc@v1
+
+      - name: Configure DVC
+        run: |
+          dvc remote add -f origin s3://dvc
+          dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
+          dvc remote modify origin --local access_key_id $DVC_ACCESS_KEY_ID
+          dvc remote modify origin --local secret_access_key $DVC_SECRET_ACCESS_KEY
+
+      - name: DVC pull
+        run: |
+          dvc pull -r origin --force
+
+      - name: Fetch news data
+        run: |
+          poetry run poe fetch_news_data
+
+      - name: Commit changes to DVC
+        run: |
+          dvc add data
+          dvc push -r origin
+
+      - name: Commit changes to GIT
+        run: |
+          git config --global user.name 'lanaben'
+          git config --global user.email 'lanaben@users.noreply.github.com'
+          git add .
+          git commit -m "Fetch news data."
+
+      - name: Push changes
+        run: git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/MBajk-prediction-app.git main
