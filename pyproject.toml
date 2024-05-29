@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "news-prediction"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+packages = [
+    { include = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.32.2"
+scikit-learn = "^1.5.0"
+keybert = "^0.8.4"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
