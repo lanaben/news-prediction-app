@@ -19,19 +19,22 @@ jobs:
         with:
           python-version: '3.11.3'
 
-      - name: Install poetry
-        uses: snok/install-poetry@v1.0.0
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo 'export PATH="$HOME/.local/bin:$PATH"' >> $GITHUB_ENV
 
-      - name: Load cached venv
-        id: cached-poetry-dependencies
+      - name: Cache Poetry dependencies
         uses: actions/cache@v2
         with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       - name: Install dependencies
-        run: poetry install
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: |
+          poetry install
 
       - name: Install DVC
         run: |
