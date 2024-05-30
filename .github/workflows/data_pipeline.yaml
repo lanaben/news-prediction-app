@@ -39,7 +39,6 @@ jobs:
       - name: Install DVC
         run: |
           poetry add dvc
-          dvc --version
 
   fetch_news_data:
     needs: setup
