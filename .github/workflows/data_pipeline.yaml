@@ -22,7 +22,7 @@ jobs:
       - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
-          echo "::add-path::$HOME/.local/bin"
+          echo 'export PATH="$HOME/.local/bin:$PATH"' >> $GITHUB_ENV
 
       - name: Cache Poetry dependencies
         uses: actions/cache@v2
@@ -41,7 +41,7 @@ jobs:
           poetry add dvc
           dvc --version
 
-  fetch_weather_data:
+  fetch_news_data:
     needs: setup
     runs-on: ubuntu-latest
 
