@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install --no-interaction --no-root
+          poetry install
 
       - name: Install DVC
         run: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install --no-interaction --no-root
+          poetry install
 
       - name: Install DVC
         uses: iterative/setup-dvc@v1
