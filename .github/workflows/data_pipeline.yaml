@@ -58,7 +58,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install --with dev --no-interaction --no-root
+          poetry install --no-interaction --no-root
 
       - name: Install DVC
         uses: iterative/setup-dvc@v1
@@ -76,7 +76,7 @@ jobs:
 
       - name: Fetch news data
         run: |
-          poetry run poe fetch_news_data
+          python src/data/fetch_news_data.py
 
       - name: Commit changes to DVC
         run: |
