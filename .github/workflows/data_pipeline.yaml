@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install --with dev --no-interaction --no-root
+          poetry install --no-interaction --no-root
 
       - name: Install DVC
         run: |
