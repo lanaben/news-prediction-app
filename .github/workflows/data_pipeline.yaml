@@ -28,9 +28,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Install DVC
-        run: |
-          pip install dvc==3.49.0
-          dvc --version
+        uses: iterative/setup-dvc@v1
 
       - name: Install dependencies
         run: |
@@ -47,9 +45,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install DVC
-        run: |
-          pip install dvc==3.49.0
-          dvc --version
+        uses: iterative/setup-dvc@v1
 
       - name: Install dependencies
         run: |
@@ -60,13 +56,12 @@ jobs:
 
       - name: Configure DVC
         run: |
-          dvc remote add -f origin s3://dvc
           dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
           dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
           dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
 
       - name: Pull data with DVC
-        run: dvc pull
+        run: dvc pull -r origin --force
 
       - name: Add and commit data to DVC
         run: |
