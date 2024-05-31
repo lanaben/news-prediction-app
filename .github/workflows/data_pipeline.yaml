@@ -88,7 +88,7 @@ jobs:
             echo "No changes to commit"
           else
             dvc add data/raw/articles.csv
-            git add data/raw/articles.csv data/raw/articles.csv.dvc
+            git add data.dvc
             git commit -m "Fetch news data"
             dvc push
             git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
