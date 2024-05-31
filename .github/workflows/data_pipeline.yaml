@@ -68,15 +68,6 @@ jobs:
       - name: Pull data with DVC
         run: dvc pull -r origin --force
 
-      - name: List files
-        run: ls
-
-      - name: List fetched files
-        run: ls -R data
-
-      - name: List fetched files
-        run: ls -R data/raw
-
       - name: Fetch news data
         run: python src/data/fetch_news_data.py
         env:
@@ -114,9 +105,6 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Configure DVC cache directory
-        run: dvc config cache.dir .dvc/cache
-
       - name: Configure DVC
         run: |
           dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
@@ -127,6 +115,8 @@ jobs:
         run: |
           git config --global user.name 'lanaben'
           git config --global user.email 'lanaben@users.noreply.github.com'
+          git status
+          git commit -m "?"
           git pull --rebase origin main
 
       - name: Pull data with DVC
