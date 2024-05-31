@@ -55,6 +55,9 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Configure DVC cache directory
+        run: dvc config cache.dir .dvc/cache
+
       - name: Configure DVC
         run: |
           dvc remote add -f origin s3://dvc
