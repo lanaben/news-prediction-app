@@ -69,7 +69,10 @@ jobs:
         run: dvc pull -r origin --force
 
       - name: List fetched files
-        run: dvc list .
+        run: ls -R data
+
+      - name: List fetched files
+        run: ls -R data/raw
 
       - name: Fetch news data
         run: python src/data/fetch_news_data.py
