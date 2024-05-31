@@ -68,6 +68,9 @@ jobs:
       - name: Pull data with DVC
         run: dvc pull -r origin --force
 
+      - name: List fetched files
+        run: dvc list .
+
       - name: Fetch news data
         run: python src/data/fetch_news_data.py
         env:
