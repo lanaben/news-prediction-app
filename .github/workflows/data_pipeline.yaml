@@ -127,6 +127,7 @@ jobs:
         run: |
           git config --global user.name 'lanaben'
           git config --global user.email 'lanaben@users.noreply.github.com'
+          git pull --rebase origin main
 
       - name: Pull data with DVC
         run: dvc pull -r origin --force
@@ -136,7 +137,6 @@ jobs:
 
       - name: Add and commit data to DVC
         run: |
-          git pull --rebase origin main
           if git diff --quiet; then
             echo "No changes to commit"
           else
