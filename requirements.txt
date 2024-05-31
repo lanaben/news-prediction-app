@@ -438,11 +438,6 @@ python-dotenv==1.0.1
     # via news-prediction (pyproject.toml)
 python-json-logger==2.0.7
     # via jupyter-events
-pytz==2024.1
-    # via
-    #   great-expectations
-    #   mlflow
-    #   pandas
 pywin32==306
     # via
     #   docker
