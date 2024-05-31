@@ -60,13 +60,15 @@ jobs:
           dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
           dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
 
-      - name: Pull data with DVC
-        run: dvc pull -r origin --force
-
       - name: Git configuration
         run: |
           git config --global user.name 'lanaben'
           git config --global user.email 'lanaben@users.noreply.github.com'
+          git fetch origin main
+          git pull --rebase origin main
+
+      - name: Pull data with DVC
+        run: dvc pull -r origin --force
 
       - name: Commit changes
         run: |
@@ -75,8 +77,6 @@ jobs:
 
       - name: Add and commit data to DVC
         run: |
-          git fetch origin main
-          git pull --rebase origin main
           python src/data/fetch_news_data.py
           dvc add data/raw/articles.csv
           git add data.dvc
