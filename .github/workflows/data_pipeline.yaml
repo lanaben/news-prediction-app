@@ -29,7 +29,7 @@ jobs:
 
       - name: Install DVC
         run: |
-          pip install dvc
+          pip install dvc==3.49.0
           dvc --version
 
       - name: Install dependencies
@@ -48,7 +48,7 @@ jobs:
 
       - name: Install DVC
         run: |
-          pip install dvc
+          pip install dvc==3.49.0
           dvc --version
 
       - name: Install dependencies
