@@ -63,7 +63,10 @@ jobs:
           dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
 
       - name: Set custom DVC cache directory
-        run: dvc config cache.dir .dvc_cache
+        run: |
+          dvc config cache.dir .dvc_cache
+          mkdir -p .dvc_cache
+          dvc config --list  
 
       - name: Pull data with DVC
         run: dvc pull
