@@ -63,6 +63,11 @@ jobs:
       - name: Pull data with DVC
         run: dvc pull -r origin --force
 
+      - name: Git configuration
+        run: |
+          git config --global user.name 'lanaben'
+          git config --global user.email 'lanaben@users.noreply.github.com'
+
       - name: Commit changes
         run: |
           git add .
@@ -70,8 +75,6 @@ jobs:
 
       - name: Add and commit data to DVC
         run: |
-          git config --global user.name 'lanaben'
-          git config --global user.email 'lanaben@users.noreply.github.com'
           git fetch origin main
           git pull --rebase origin main
           python src/data/fetch_news_data.py
