@@ -36,6 +36,12 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Set custom DVC cache directory
+        run: |
+          mkdir -p .dvc_cache
+          dvc config cache.dir .dvc_cache
+          dvc config --list
+
 
   fetch_weather_data:
     needs: setup
@@ -62,13 +68,9 @@ jobs:
           dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
           dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
 
-      - name: Set custom DVC cache directory
-        run: |
-          dvc config cache.dir .dvc_cache
-          mkdir -p .dvc_cache
-          dvc config --list  
-
       - name: Pull data with DVC
+        env:
+          DVC_CACHE_DIR: /home/runner/work/news-prediction-app/news-prediction-app/.dvc_cache
         run: dvc pull
 
       - name: Add and commit data to DVC
