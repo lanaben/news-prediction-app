@@ -68,6 +68,9 @@ jobs:
       - name: Pull data with DVC
         run: dvc pull -r origin --force
 
+      - name: List files
+        run: ls
+
       - name: List fetched files
         run: ls -R data
 
