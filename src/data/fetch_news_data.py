@@ -57,7 +57,10 @@ except requests.exceptions.JSONDecodeError as e:
     print(f"Failed to decode JSON response: {e}")
     exit(1)
 
-csv_file_path = "../../data/raw/articles.csv"
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(ROOT_DIR, '..', '..', 'data')
+csv_file_path = os.path.join(DATA_DIR, "raw", "articles.csv")
+
 with open(csv_file_path, "a", newline="", encoding="utf-8") as csv_file:
     csv_writer = csv.writer(csv_file)
 
