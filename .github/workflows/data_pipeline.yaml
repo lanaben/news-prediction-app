@@ -136,6 +136,7 @@ jobs:
 
       - name: Add and commit data to DVC
         run: |
+          git pull --rebase origin main
           if git diff --quiet; then
             echo "No changes to commit"
           else
