@@ -35,7 +35,7 @@ jobs:
           pip install -r requirements.txt
 
 
-  fetch_weather_data:
+  fetch_news_data:
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -62,6 +62,11 @@ jobs:
 
       - name: Pull data with DVC
         run: dvc pull -r origin --force
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Committing dvc."
 
       - name: Add and commit data to DVC
         run: |
