@@ -85,4 +85,4 @@ jobs:
           git commit -m "Fetch news data."
           git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
         env:
-          IIS: ${{ secrets.IIS }}
+          API_KEY: ${{ secrets.API_KEY }}
