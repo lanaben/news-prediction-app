@@ -42,6 +42,10 @@ jobs:
           dvc config cache.dir .dvc_cache
           dvc config --list
 
+      - name: Ensure cache directory permissions
+        run: |
+          ls -ld .dvc_cache
+          chmod -R 777 .dvc_cache
 
   fetch_weather_data:
     needs: setup
@@ -67,6 +71,11 @@ jobs:
           dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
           dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
           dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
+
+      - name: Ensure cache directory permissions
+        run: |
+          ls -ld .dvc_cache
+          chmod -R 777 .dvc_cache    
 
       - name: Pull data with DVC
         env:
