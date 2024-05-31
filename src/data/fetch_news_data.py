@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import requests
 import csv
 from dotenv import load_dotenv
@@ -5,6 +7,12 @@ import os
 
 load_dotenv()
 apiKey = os.getenv("API_KEY")
+
+if not apiKey:
+    raise ValueError("API_KEY environment variable is not set")
+
+yesterday = datetime.now() - timedelta(days=1)
+date_str = yesterday.strftime("%Y-%m-%d")
 
 url = "https://newsapi.ai/api/v1/article/getArticles"
 
@@ -16,8 +24,8 @@ payload = {
                     "conceptUri": "http://en.wikipedia.org/wiki/Technology"
                 },
                 {
-                    "dateStart": "2024-05-28",
-                    "dateEnd": "2024-05-28",
+                    "dateStart": date_str,
+                    "dateEnd": date_str,
                     "lang": "eng"
                 }
             ]
@@ -36,7 +44,18 @@ payload = {
 
 response = requests.post(url, json=payload)
 
-data = response.json()
+print(f"Response status code: {response.status_code}")
+print(f"Response content: {response.text}")
+
+if response.text.strip() == "":
+    print("The API returned an empty response.")
+    exit(1)
+
+try:
+    data = response.json()
+except requests.exceptions.JSONDecodeError as e:
+    print(f"Failed to decode JSON response: {e}")
+    exit(1)
 
 csv_file_path = "../../data/raw/articles.csv"
 with open(csv_file_path, "a", newline="", encoding="utf-8") as csv_file:
@@ -49,7 +68,7 @@ with open(csv_file_path, "a", newline="", encoding="utf-8") as csv_file:
         if article.get("categories", []):
             category_label = article.get("categories", [])[0].get("label", "")
             if category_label:
-                first_category_label = category_label.split("/")[1]  # Get the first word after 'dmoz/'
+                first_category_label = category_label.split("/")[1]
 
         csv_writer.writerow([
             article.get("dateTime", ""),
