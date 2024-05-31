@@ -99,7 +99,7 @@ jobs:
 
 
   process_news_data:
-    needs: setup
+    needs: fetch_news_data
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
