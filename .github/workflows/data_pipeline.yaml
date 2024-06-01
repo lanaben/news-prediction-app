@@ -80,7 +80,7 @@ jobs:
           else
             dvc add data/raw/articles.csv
             git add data.dvc
-            git commit -m "Fetch news data"
+            git commit -m "Fetch news data."
             dvc push
             git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
           fi
@@ -122,13 +122,16 @@ jobs:
       - name: Process news data
         run: python src/models/bert.py
 
+      - name: Add data to dvc and git
+        run: |
+          dvc add data/processed/articles_with_keywords.csv
+          git add data.dvc
+
       - name: Add and commit data to DVC
         run: |
           if git diff --quiet; then
             echo "No changes to commit"
           else
-            dvc add data/processed/articles_with_keywords.csv
-            git add data.dvc
             git commit -m "Add keywords to news data."
             dvc push
             git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main

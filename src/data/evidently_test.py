@@ -11,17 +11,17 @@ def load_data(directory):
     data_frames = []
     for file in files:
         df = pd.read_csv(os.path.join(directory, file))
-        if 'datetime' in df.columns:
-            df['datetime'] = pd.to_datetime(df['datetime'])
+        if 'Datetime' in df.columns:
+            df['Datetime'] = pd.to_datetime(df['Datetime'])
         data_frames.append(df)
     return pd.concat(data_frames, ignore_index=True)
 
-reference_data = load_data("reference_data/processed")
-current_data = load_data("processed_current/processed")
+reference_data = load_data("../../data/reference_data")
+current_data = load_data("../../data/processed")
 
 report = Report(metrics=[DataDriftPreset()])
 report.run(reference_data=reference_data, current_data=current_data)
-report.save_html('reports/report.html')
+report.save_html('../../reports/report.html')
 
 tests = TestSuite(tests=[
     TestNumberOfColumnsWithMissingValues(),
