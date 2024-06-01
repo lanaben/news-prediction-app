@@ -1,0 +1,108 @@
+{
+  "evaluation_parameters": {},
+  "meta": {
+    "active_batch_definition": {
+      "batch_identifiers": {
+        "location": "articles_with_keywords"
+      },
+      "data_asset_name": "DEFAULT_ASSET_NAME",
+      "data_connector_name": "default_inferred_data_connector",
+      "datasource_name": "my_csv_datasource"
+    },
+    "batch_markers": {
+      "ge_load_time": "20240601T093436.720361Z",
+      "pandas_data_fingerprint": "55b80392d3e22122005ba262d3b43de9"
+    },
+    "batch_spec": {
+      "path": "C:\\Users\\Uporabnik\\PycharmProjects\\news-prediction\\gx\\..\\data\\processed\\articles_with_keywords.csv"
+    },
+    "checkpoint_id": null,
+    "checkpoint_name": "test_checkpoint",
+    "expectation_suite_name": "test",
+    "great_expectations_version": "0.18.15",
+    "run_id": {
+      "run_name": null,
+      "run_time": "2024-06-01T11:34:36.711942+02:00"
+    },
+    "validation_id": null,
+    "validation_time": "20240601T093436.757654Z"
+  },
+  "results": [
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "batch_id": "df80fa0a8e4d8b70d990b3efc394763c",
+          "max_value": 200000,
+          "min_value": 200
+        },
+        "meta": {
+          "profiler_details": {
+            "metric_configuration": {
+              "domain_kwargs": {},
+              "metric_name": "table.row_count",
+              "metric_value_kwargs": null
+            },
+            "num_batches": 29
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": 400
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_table_columns_to_match_set",
+        "kwargs": {
+          "batch_id": "df80fa0a8e4d8b70d990b3efc394763c",
+          "column_set": [
+            "DateTime",
+            "Title",
+            "Categories",
+            "Sentiment",
+            "Relevance",
+            "Keywords"
+          ],
+          "exact_match": null
+        },
+        "meta": {
+          "profiler_details": {
+            "success_ratio": 1.0
+          }
+        }
+      },
+      "meta": {},
+      "result": {
+        "observed_value": [
+          "DateTime",
+          "Title",
+          "Categories",
+          "Sentiment",
+          "Relevance",
+          "Keywords"
+        ]
+      },
+      "success": true
+    }
+  ],
+  "statistics": {
+    "evaluated_expectations": 2,
+    "success_percent": 100.0,
+    "successful_expectations": 2,
+    "unsuccessful_expectations": 0
+  },
+  "success": true
+}
