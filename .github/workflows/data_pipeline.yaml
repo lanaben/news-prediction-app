@@ -35,7 +35,7 @@ jobs:
           pip install -r requirements.txt
 
 
-  fetch_news_data:
+  fetch_and_process_news_data:
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -84,60 +84,6 @@ jobs:
             git add data.dvc
             git commit -m "Fetch news data."
             dvc push
-            git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
-          fi
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
-          IIS: ${{ secrets.IIS }}
-
-
-  process_news_data:
-    needs: fetch_news_data
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Install DVC
-        uses: iterative/setup-dvc@v1
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Configure DVC
-        run: |
-          dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
-          dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
-          dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
-
-      - name: Git configuration
-        run: |
-          git config --global user.name 'lanaben'
-          git config --global user.email 'lanaben@users.noreply.github.com'
-
-      - name: Pull data with DVC
-        run: dvc pull -r origin --force
-
-      - name: Process news data
-        run: |
-          python src/models/bert.py
-          cat data/processed/articles_with_keywords.csv
-
-      - name: Add data to dvc and git
-        run: |
-          dvc add data/processed/articles_with_keywords.csv
-          git add data.dvc
-
-      - name: Add and commit data to DVC
-        run: |
-          if git diff --quiet; then
-            echo "No changes to commit"
-          else
-            dvc push
-            git commit -m "Add keywords to news data."
             git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
           fi
         env:
