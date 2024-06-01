@@ -134,8 +134,8 @@ jobs:
           if git diff --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Add keywords to news data."
             dvc push
+            git commit -m "Add keywords to news data."
             git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
           fi
         env:
