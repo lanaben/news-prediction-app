@@ -16,8 +16,10 @@ def load_data(directory):
         data_frames.append(df)
     return pd.concat(data_frames, ignore_index=True)
 
-reference_data = load_data("../../data/reference_data")
-current_data = load_data("../../data/processed")
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(ROOT_DIR, '..', '..', 'data')
+current_data = load_data(os.path.join(DATA_DIR, "processed"))
+reference_data = load_data(os.path.join(DATA_DIR, "reference_data"))
 
 report = Report(metrics=[DataDriftPreset()])
 report.run(reference_data=reference_data, current_data=current_data)
