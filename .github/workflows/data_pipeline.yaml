@@ -120,7 +120,9 @@ jobs:
         run: dvc pull -r origin --force
 
       - name: Process news data
-        run: python src/models/bert.py
+        run: |
+          python src/models/bert.py
+          cat data/processed/articles_with_keywords.csv
 
       - name: Add data to dvc and git
         run: |
