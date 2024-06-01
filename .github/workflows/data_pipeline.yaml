@@ -89,3 +89,105 @@ jobs:
         env:
           API_KEY: ${{ secrets.API_KEY }}
           IIS: ${{ secrets.IIS }}
+
+  validate_data:
+    needs: fetch_and_process_news_data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install DVC
+        uses: iterative/setup-dvc@v1
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Configure DVC
+        run: |
+          dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
+          dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
+          dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
+
+      - name: Pull data with DVC
+        run: dvc pull
+
+      - name: Copy latest data version
+        run: |
+          git config --global user.name 'lanaben'
+          git config --global user.email 'lanaben@users.noreply.github.com'
+          git fetch origin main
+          git pull --rebase origin main
+          cp -r data/processed processed_current
+          git add processed_current
+          git commit -m "Track current processed data."
+          git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
+
+      - name: Checkout and copy previous data version
+        run: |
+          git fetch --all
+          git checkout HEAD^
+          git checkout -b temp-branch
+          dvc pull
+          cp -r data/processed reference_data
+          git add reference_data
+          git commit -m "Referenced processed data on temp branch."
+          git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
+          git checkout main
+          git checkout temp-branch -- reference_data
+          git add reference_data
+          git commit -m "Track referenced processed data."
+          git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
+
+      - name: Install Great Expectations
+        run: |
+          pip install great_expectations
+
+      - name: Validate Data with Great Expectations
+        run: |
+          great_expectations checkpoint run test_checkpoint
+
+
+  test_data:
+    needs: validate_data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install DVC
+        run: |
+          pip install dvc
+          pip install evidently
+          dvc --version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Configure DVC
+        run: |
+          dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
+          dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
+          dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
+
+      - name: Add and commit test report
+        run: |
+          git config --global user.name 'lanaben'
+          git config --global user.email 'lanaben@users.noreply.github.com'
+          git fetch origin main
+          git pull --rebase origin main
+          python src/data/evidently_test.py
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit."
+          else
+            git commit -am "Test bike data."
+            git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
+          fi
+        env:
+          IIS: ${{ secrets.IIS }}
