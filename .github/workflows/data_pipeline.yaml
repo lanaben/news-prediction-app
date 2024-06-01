@@ -69,7 +69,9 @@ jobs:
         run: dvc pull -r origin --force
 
       - name: Fetch news data
-        run: python src/data/fetch_news_data.py
+        run: |
+          python src/data/fetch_news_data.py
+          python src/models/bert.py
         env:
           API_KEY: ${{ secrets.API_KEY }}
 
@@ -78,7 +80,7 @@ jobs:
           if git diff --quiet; then
             echo "No changes to commit"
           else
-            dvc add data/raw/articles.csv
+            dvc add data
             git add data.dvc
             git commit -m "Fetch news data."
             dvc push
