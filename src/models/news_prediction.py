@@ -128,7 +128,7 @@ with dagshub_logger() as logger, mlflow.start_run() as run:
         joblib.dump(model, model_path)
         print(f"Uncompressed Random Forest: {np.round(os.path.getsize(model_path) / 1024 / 1024, 2)} MB")
 
-        joblib.dump(model, '../../models/news_prediction_model_compressed.joblib', compress=3)
+        joblib.dump(model, model_path_compressed, compress=3)
         print(f"Compressed Random Forest: {np.round(os.path.getsize(model_path_compressed) / 1024 / 1024, 2)} MB")
 
         logger.log_hyperparams({"n_estimators": 100, "random_state": 42})
