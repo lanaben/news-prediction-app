@@ -142,9 +142,10 @@ jobs:
           git commit -m "Track referenced processed data."
           git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
 
-      - name: Install Great Expectations
+      - name: Install Great Expectations & Evidently
         run: |
           pip install great_expectations
+          pip install evidently
 
       - name: Validate Data with Great Expectations
         run: |
