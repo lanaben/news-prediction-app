@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Uporabnik/PycharmProjects/news-prediction/src/models/mlruns/583176824229667434/c4706bd392ac4787a11d2187a58caecd/artifacts
+end_time: 1717322493940
+entry_point_name: ''
+experiment_id: '583176824229667434'
+lifecycle_stage: active
+run_id: c4706bd392ac4787a11d2187a58caecd
+run_name: respected-hare-134
+run_uuid: c4706bd392ac4787a11d2187a58caecd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1717322479667
+status: 3
+tags: []
+user_id: Uporabnik

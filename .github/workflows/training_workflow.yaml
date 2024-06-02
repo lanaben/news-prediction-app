@@ -1,0 +1,46 @@
+name: Model Prediction And Deployment Workflow
+
+on:
+  workflow_run:
+    workflows: [data_pipeline]
+    types:
+      - completed
+
+jobs:
+  prediction_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install DVC
+        uses: iterative/setup-dvc@v1
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Configure DVC
+        run: |
+          dvc remote modify origin endpointurl https://dagshub.com/lanaben/news-prediction-app.s3
+          dvc remote modify origin --local access_key_id ${{ secrets.ACCES_KEY_ID }}
+          dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
+
+      - name: Pull data with DVC
+        run: dvc pull
+
+      - name: Add and commit prediction reports
+        run: |
+          git config --global user.name 'lanaben'
+          git config --global user.email 'lanaben@users.noreply.github.com'
+          git fetch origin main
+          git pull --rebase origin main
+          python src/models/news_prediction.py
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit."
+          else
+            git commit -am "News prediction model."
+            git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
+          fi
