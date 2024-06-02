@@ -23,7 +23,7 @@ reference_data = load_data(os.path.join(DATA_DIR, "reference_data"))
 
 report = Report(metrics=[DataDriftPreset()])
 report.run(reference_data=reference_data, current_data=current_data)
-report.save_html('../../reports/report.html')
+report.save_html(os.path.join(DATA_DIR, "reports", "report.html"))
 
 tests = TestSuite(tests=[
     TestNumberOfColumnsWithMissingValues(),
