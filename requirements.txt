@@ -141,7 +141,7 @@ h5py==3.11.0
     # via keras
 httpcore==1.0.5
     # via httpx
-httpx==0.27.0
+httpx
     # via jupyterlab
 huggingface-hub==0.23.2
     # via
@@ -245,7 +245,7 @@ jupyter-server==2.14.1
     #   notebook-shim
 jupyter-server-terminals==0.5.3
     # via jupyter-server
-jupyterlab==4.2.1
+jupyterlab
     # via notebook
 jupyterlab-pygments==0.3.0
     # via nbconvert
@@ -633,4 +633,4 @@ zipp==3.19.0
 evidently~=0.4.25
 shap~=0.45.1
 eli5~=0.13.0
-dagshub~=0.3.27
+dagshub
