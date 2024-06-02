@@ -464,7 +464,7 @@ rfc3986-validator==0.1.1
     # via
     #   jsonschema
     #   jupyter-events
-rich==13.7.1
+rich
     # via
     #   keras
     #   keybert
