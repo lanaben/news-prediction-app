@@ -40,4 +40,15 @@ tests.run(reference_data=reference_data, current_data=current_data)
 test_results = tests.json()
 parsed_results = json.loads(test_results)
 
-print(json.dumps(parsed_results, indent=4))
+output_file = os.path.join(DATA_DIR, "reports", "test_results.json")
+
+if os.path.exists(output_file) and os.stat(output_file).st_size != 0:
+    with open(output_file, 'r') as f:
+        results_array = json.load(f)
+else:
+    results_array = []
+
+results_array.append(parsed_results)
+
+with open(output_file, 'w') as f:
+    json.dump(results_array, f, indent=4)
