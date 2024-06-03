@@ -44,3 +44,5 @@ jobs:
             git commit -am "News prediction model."
             git push https://lanaben:${{ secrets.IIS }}@github.com/lanaben/news-prediction-app.git main
           fi
+        env:
+          MLFLOW_URL: ${{ secrets.MLFLOW_URL }}
