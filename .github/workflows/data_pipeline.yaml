@@ -149,7 +149,7 @@ jobs:
 
       - name: Validate Data with Great Expectations
         run: |
-          great_expectations checkpoint run test_checkpoint
+          python src/data/checkpoint_run.py
 
       - name: Add and commit test report
         run: |

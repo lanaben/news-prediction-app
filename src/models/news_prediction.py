@@ -34,8 +34,8 @@ df = pd.read_csv(data_path)
 
 df['DateTime'] = pd.to_datetime(df['DateTime']).astype('int64') / 10 ** 9
 
-X = df.drop(columns='sourceImportance')
-y = df['sourceImportance']
+X = df.drop(columns='Relevance')
+y = df['Relevance']
 
 preprocessor = ColumnTransformer(
     transformers=[

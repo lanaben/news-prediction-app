@@ -1,5 +1,4 @@
 import json
-
 import pandas as pd
 from flask import Flask, request, jsonify, send_file
 import mlflow.sklearn
@@ -7,16 +6,16 @@ from mlflow.tracking import MlflowClient
 import os
 import logging
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 REPORTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'reports')
 TESTING_REPORT = os.path.join(REPORTS_DIR, 'test_results.json')
 VALIDATION_REPORT = os.path.join(REPORTS_DIR, 'validation_report.txt')
-
 load_dotenv()
-
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
+CORS(app)
 
 mlflow_tracking_uri = os.getenv("MLFLOW_URL")
 if not mlflow_tracking_uri:
