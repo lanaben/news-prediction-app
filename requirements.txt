@@ -634,3 +634,4 @@ evidently~=0.4.25
 shap~=0.45.1
 eli5~=0.13.0
 dagshub
+flask_cors

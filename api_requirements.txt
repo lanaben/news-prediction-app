@@ -1,0 +1,8 @@
+joblib
+numpy
+pandas
+mlflow
+dagshub
+scikit-learn
+python-dotenv
+flask_cors

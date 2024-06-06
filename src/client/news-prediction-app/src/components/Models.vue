@@ -13,7 +13,8 @@
 export default {
   data() {
     return {
-      models: []
+      models: [],
+      backendURL: process.env.VUE_APP_BACKEND_URL
     };
   },
   mounted() {
@@ -22,7 +23,7 @@ export default {
   methods: {
     async fetchModels() {
       try {
-        const response = await fetch('http://localhost:5000/models');
+        const response = await fetch(`${this.backendURL}/models`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

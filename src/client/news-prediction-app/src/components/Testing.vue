@@ -9,7 +9,8 @@
 export default {
   data() {
     return {
-      results: null
+      results: null,
+      backendURL: process.env.VUE_APP_BACKEND_URL
     };
   },
   mounted() {
@@ -18,7 +19,7 @@ export default {
   methods: {
     async fetchResults() {
       try {
-        const response = await fetch('http://localhost:5000/testing');
+        const response = await fetch(`${this.backendURL}/testing`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

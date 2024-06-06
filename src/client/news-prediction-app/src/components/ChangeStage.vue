@@ -28,13 +28,14 @@ export default {
         version: '',
         new_stage: ''
       },
-      message: null
+      message: null,
+      backendURL: process.env.VUE_APP_BACKEND_URL
     };
   },
   methods: {
     async submitForm() {
       try {
-        const response = await fetch('http://localhost:5000/change_model_stage', {
+        const response = await fetch(`${this.backendURL}/change_model_stage`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -57,7 +57,8 @@ export default {
         Sentiment: '',
         Keywords: ''
       },
-      prediction: null
+      prediction: null,
+      backendURL: process.env.VUE_APP_BACKEND_URL
     };
   },
   mounted() {
@@ -66,7 +67,7 @@ export default {
   methods: {
     async fetchArticles() {
       try {
-        const response = await fetch('http://localhost:5000/articles');
+        const response = await fetch(`${this.backendURL}/articles`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -77,7 +78,7 @@ export default {
     },
     async submitForm() {
       try {
-        const response = await fetch('http://localhost:5000/predict', {
+        const response = await fetch(`${this.backendURL}/predict`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

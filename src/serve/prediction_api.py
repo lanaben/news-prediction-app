@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 
 REPORTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'reports')
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'articles.csv')
 TESTING_REPORT = os.path.join(REPORTS_DIR, 'test_results.json')
 VALIDATION_REPORT = os.path.join(REPORTS_DIR, 'validation_report.txt')
 load_dotenv()
@@ -50,7 +51,7 @@ def predict():
 
 @app.route('/articles', methods=['GET'])
 def get_articles():
-    articles_df = pd.read_csv('../../data/raw/articles.csv')
+    articles_df = pd.read_csv(DATA_DIR)
     random_articles = articles_df.sample(5).to_dict(orient='records')
     return jsonify(random_articles)
 
