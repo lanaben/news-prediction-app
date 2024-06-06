@@ -72,7 +72,7 @@ comm==0.2.2
     # via
     #   ipykernel
     #   ipywidgets
-contourpy==1.2.1
+contourpy
     # via matplotlib
 cryptography==42.0.7
     # via great-expectations
