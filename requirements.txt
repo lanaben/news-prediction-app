@@ -173,7 +173,7 @@ intel-openmp==2021.4.0
     # via mkl
 ipykernel==6.29.4
     # via jupyterlab
-ipython==8.18.1
+ipython
     # via
     #   great-expectations
     #   ipykernel
