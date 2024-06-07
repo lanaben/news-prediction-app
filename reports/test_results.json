@@ -858,5 +858,177 @@
             }
         },
         "timestamp": "2024-06-06 07:15:07.045608"
+    },
+    {
+        "version": "0.4.26",
+        "tests": [
+            {
+                "name": "The Number of Columns With Missing Values",
+                "description": "The number of columns with missing values is 0. The test threshold is lte=0.",
+                "status": "SUCCESS",
+                "group": "data_integrity",
+                "parameters": {
+                    "condition": {
+                        "lte": 0
+                    },
+                    "value": 0.0
+                }
+            },
+            {
+                "name": "The Number Of Rows With Missing Values",
+                "description": "The number of rows with missing values is 0. The test threshold is lte=0 \u00b1 1e-12.",
+                "status": "SUCCESS",
+                "group": "data_integrity",
+                "parameters": {
+                    "condition": {
+                        "lte": {
+                            "value": 0.0,
+                            "relative": 0.1,
+                            "absolute": 1e-12
+                        }
+                    },
+                    "value": 0.0
+                }
+            },
+            {
+                "name": "Number of Constant Columns",
+                "description": "The number of constant columns is 0. The test threshold is lte=0.",
+                "status": "SUCCESS",
+                "group": "data_integrity",
+                "parameters": {
+                    "condition": {
+                        "lte": 0
+                    },
+                    "value": 0.0
+                }
+            },
+            {
+                "name": "Number of Duplicate Rows",
+                "description": "The number of duplicate rows is 1200. The test threshold is eq=1.22e+03 \u00b1 122.",
+                "status": "SUCCESS",
+                "group": "data_integrity",
+                "parameters": {
+                    "condition": {
+                        "eq": {
+                            "value": 1218.75,
+                            "relative": 0.1,
+                            "absolute": 1e-12
+                        }
+                    },
+                    "value": 1200.0
+                }
+            },
+            {
+                "name": "Number of Duplicate Columns",
+                "description": "The number of duplicate columns is 0. The test threshold is lte=0.",
+                "status": "SUCCESS",
+                "group": "data_integrity",
+                "parameters": {
+                    "condition": {
+                        "lte": 0
+                    },
+                    "value": 0.0
+                }
+            },
+            {
+                "name": "Column Types",
+                "description": "The number of columns with a type mismatch is 0 out of 6.",
+                "status": "SUCCESS",
+                "group": "data_integrity",
+                "parameters": {
+                    "columns": [
+                        {
+                            "actual_type": "object_",
+                            "column_name": "DateTime",
+                            "expected_type": "object_"
+                        },
+                        {
+                            "actual_type": "object_",
+                            "column_name": "Title",
+                            "expected_type": "object_"
+                        },
+                        {
+                            "actual_type": "object_",
+                            "column_name": "Categories",
+                            "expected_type": "object_"
+                        },
+                        {
+                            "actual_type": "float64",
+                            "column_name": "Sentiment",
+                            "expected_type": "float64"
+                        },
+                        {
+                            "actual_type": "int64",
+                            "column_name": "Relevance",
+                            "expected_type": "int64"
+                        },
+                        {
+                            "actual_type": "object_",
+                            "column_name": "Keywords",
+                            "expected_type": "object_"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Number of Drifted Features",
+                "description": "The drift is detected for 0 out of 6 features. The test threshold is lt=2.",
+                "status": "SUCCESS",
+                "group": "data_drift",
+                "parameters": {
+                    "condition": {
+                        "lt": 2
+                    },
+                    "features": {
+                        "Relevance": {
+                            "stattest": "Wasserstein distance (normed)",
+                            "score": 0.004,
+                            "threshold": 0.1,
+                            "detected": false
+                        },
+                        "Sentiment": {
+                            "stattest": "Wasserstein distance (normed)",
+                            "score": 0.009,
+                            "threshold": 0.1,
+                            "detected": false
+                        },
+                        "Categories": {
+                            "stattest": "Jensen-Shannon distance",
+                            "score": 0.005,
+                            "threshold": 0.1,
+                            "detected": false
+                        },
+                        "DateTime": {
+                            "stattest": "Jensen-Shannon distance",
+                            "score": 0.024,
+                            "threshold": 0.1,
+                            "detected": false
+                        },
+                        "Keywords": {
+                            "stattest": "Jensen-Shannon distance",
+                            "score": 0.024,
+                            "threshold": 0.1,
+                            "detected": false
+                        },
+                        "Title": {
+                            "stattest": "Jensen-Shannon distance",
+                            "score": 0.024,
+                            "threshold": 0.1,
+                            "detected": false
+                        }
+                    }
+                }
+            }
+        ],
+        "summary": {
+            "all_passed": true,
+            "total_tests": 7,
+            "success_tests": 7,
+            "failed_tests": 0,
+            "by_status": {
+                "SUCCESS": 7
+            }
+        },
+        "timestamp": "2024-06-07 07:16:00.852295"
     }
 ]
