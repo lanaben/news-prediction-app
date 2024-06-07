@@ -1,6 +1,5 @@
 import os
 import joblib
-import numpy as np
 import pandas as pd
 import mlflow
 import mlflow.sklearn
@@ -125,10 +124,8 @@ with dagshub_logger() as logger, mlflow.start_run() as run:
         model_path_compressed = os.path.join(MODELS_DIR, "news_prediction_model_compressed.joblib")
 
         joblib.dump(model, model_path)
-        print(f"Uncompressed Random Forest: {np.round(os.path.getsize(model_path) / 1024 / 1024, 2)} MB")
 
         joblib.dump(model, model_path_compressed, compress=3)
-        print(f"Compressed Random Forest: {np.round(os.path.getsize(model_path_compressed) / 1024 / 1024, 2)} MB")
 
         logger.log_hyperparams({"n_estimators": 100, "random_state": 42})
         logger.log_metrics({"mse": mse, "mae": mae, "r2": r2})
