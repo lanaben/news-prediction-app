@@ -42,6 +42,7 @@ export default {
 </script>
 
 <style scoped>
+@import 'tailwindcss/tailwind.css';
 .container {
   width: 80%;
   margin: 0 auto;
@@ -50,23 +51,11 @@ export default {
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
-
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
 .content {
   background-color: #f9f9f9;
   padding: 20px;

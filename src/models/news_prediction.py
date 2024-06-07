@@ -31,6 +31,8 @@ MODELS_DIR = os.path.join(ROOT_DIR, '..', '..', 'models')
 data_path = os.path.join(DATA_DIR, "processed", "articles_with_keywords.csv")
 df = pd.read_csv(data_path)
 
+df = df.dropna()
+
 df['DateTime'] = pd.to_datetime(df['DateTime']).astype('int64') / 10 ** 9
 
 X = df.drop(columns='Relevance')

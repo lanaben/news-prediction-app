@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Validation Results</h2>
-    <a :href="validationReportURL" download>Download Validation Report</a>
+    <button><a :href="validationReportURL" download>Download Validation Report</a> </button>
   </div>
 </template>
 
@@ -14,3 +14,7 @@ export default {
   }
 };
 </script>
+
+<style>
+@import 'tailwindcss/tailwind.css';
+</style>
