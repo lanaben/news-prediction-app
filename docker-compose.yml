@@ -3,14 +3,14 @@ services:
   news-prediction-be:
     build: .
     restart: always
-    container_name: "news-prediction-be:2"
+    container_name: "be-news-prediction"
     ports:
       - "5000:5000"
 
   news-prediction-fe:
     build: ./src/client/news-prediction-app
     restart: always
-    container_name: "news-prediction-fe:2"
+    container_name: "fe-news-prediction"
     ports:
       - "3000:3000"
     depends_on:
